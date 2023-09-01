@@ -22,11 +22,18 @@ concurrency:
   cancel-in-progress: false
 
 jobs:
+
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Build
+        run: echo Building the app...
   # Single deploy job since we're just deploying
   deploy:
     environment:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
+    needs: build
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
